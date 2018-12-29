@@ -617,3 +617,6 @@ module.exports={
 }
 ```
 对于采用了非ES6模块化语法的代码，webpack会降级处理切不实用Scope Hoisting优化。为了知道webpack对那些代码做了降级处理，我们可以在启动Webpack时带上`--display-optimization-bailout`参数，这样在输出日志中显示；其中的`ModuleConcatenation bailout`告诉我们哪个文件因为什么原因导致了降级处理；
+
+
+参考：深入浅出Webpack
