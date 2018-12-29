@@ -1,0 +1,16 @@
+.imgBox{
+    width:200px;
+    height:200px;
+}
+.imgBox img{
+    width:100%;
+    height:100%;
+    display: block;
+}
+
+.imgBg{
+    width:100px;
+    height:100px;
+    background: url('../img/icon.jpg') no-repeat center;
+    background-size: 100%;
+}
