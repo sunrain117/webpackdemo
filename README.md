@@ -593,7 +593,7 @@ splitChunks:{
 ```
 
 ### 开启Scope Hoisting(作用域提升)
-Scope Hoisting可以让Webpack打包出来的代码文件更小，运行更快，它又被译作“作用域提升”，实在webpack 3 中新推出的功能，在Webpac 4 模式为“production”下，默认开启；
+Scope Hoisting可以让Webpack打包出来的代码文件更小，运行更快，它又被译作“作用域提升”，是在webpack 3 中新推出的功能，在Webpac 4 模式为“production”下，默认开启；
 
 ##### Scope Hoisting的优势
 * 代码提及更小，因为函数声明语句会产生大量的代码
@@ -617,36 +617,3 @@ module.exports={
 }
 ```
 对于采用了非ES6模块化语法的代码，webpack会降级处理切不实用Scope Hoisting优化。为了知道webpack对那些代码做了降级处理，我们可以在启动Webpack时带上`--display-optimization-bailout`参数，这样在输出日志中显示；其中的`ModuleConcatenation bailout`告诉我们哪个文件因为什么原因导致了降级处理；
-
-### 输出分析
-上面介绍的优化方法，但这些方法无法应对所有场景，为此我们需要对输出结果进行分析，以决定下一步的优化方向。
-* 直接分析webpack输出的代码
-> 可读性非常差而且文件非常大，让我们非常头疼
-* 官方的可视化分析工具
-在启动Webpack时支持如下两个参数。  
-1. --profile:记录构建过程中的耗时信息  
-2. --json:以json的格式输出构建结果，最后只输出一个.json文件，这个文件中包含所有构建相关的信息。
-
-命令如下：`webpack --profile --json > stats.json`会生成一个stats.json文件。这个文件将在使用可视化工具时使用；
-
-##### Webpack Analyse（官方提供：http://webpack.github.io/analyse）
-打开链接的网页后，就会看到一个弹窗，提示我们上传JSON文件，也就是需要上传stats.json。该工具不会将json发送到服务器，而是在浏览器本地解析。不用担心代码为此而泄漏。  
-该分析页面分为如下6大板块
-* Modules：展示所有模块，每个模块对应一个文件，并且包含所有模块之间的依赖关系图、模块路径、模块ID、模块所属的Chunk、模块的大小；
-* Chunks：展示所有代码块，在一个代码块中包含多个模块，并且包含代码块的ID、名称、大小、每个代码块包含的模块数量，以及代码块之间的依赖关系图；
-* Assets：展示所有输出的文件资源，包括.js、.css、图片等，并且包含文件的名称、大小及该文件来自哪个模块。
-* Warnings：展示构建过程中出现的所有警告信息；
-* Errors：展示构建过程中出现的所有错误信息。
-* Hints：展示处理每个模块所耗费的时间；
-
-##### webpack-bundle-analyzer 另一个可视化工具(https://www.npmjs.com/package/webpack-bundle-analyzer)
-该工具没有Webpack Analyse那么多的功能，但比它更直观；该工具很方便的告诉我们：
-* 打包出的文中都包含了什么；
-* 每个文件的尺寸在总体中的占比，让我们一眼看出那些文件的尺寸大；
-* 模块之间的包含关系；
-* 每个文件的Gzip后的大小；
-
-使用方法：
-* 安装webpack-bundle-analyzer到全局，命令`npm i -g webpack-bundle-analyzer`；
-* 按照上面的方法生成stats.json文件；
-* 在项目根目录中执行`webpack-bundle-analyzer`后，浏览器会打开对应的网页并展现以上效果。
